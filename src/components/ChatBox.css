@@ -1,0 +1,26 @@
+.chat-box {
+  flex: 1;
+  padding: 0.5rem 1rem;
+  padding-bottom: 80px; /* Add padding to prevent messages from being hidden behind input */
+  overflow-y: auto;
+  background-color: #18181b;
+  font-size: 13px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* ... existing scrollbar styles ... */
+
+/* Add Twitch-like scrollbar */
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+  background-color: #3a3a3d;
+  border-radius: 3px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+  background-color: #18181b;
+}

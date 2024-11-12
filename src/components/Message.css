@@ -1,0 +1,150 @@
+.message {
+  margin-bottom: 0.2rem;
+  padding: 0.3rem 0.5rem;
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.message:hover {
+  background-color: #1f1f23;
+}
+
+.message-content-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  flex: 1;
+}
+
+.message-user {
+  font-weight: 600;
+  margin-right: 0.4rem;
+  color: #4d9eff;
+  cursor: pointer;
+}
+
+.message-user:hover {
+  text-decoration: underline;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #adadb8;
+  margin-right: 0.4rem;
+}
+
+.message-content {
+  color: #dedee3;
+}
+
+.message-censored .message-content {
+  color: #71717a;
+  font-style: italic;
+}
+
+.message-censor-button {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+}
+
+.message:hover .message-censor-button {
+  opacity: 1;
+}
+
+.message-censor-button:hover {
+  color: #ff6666;
+}
+
+.mod-actions {
+  position: relative;
+}
+
+.message-mod-button {
+  opacity: 0;
+  background: none;
+  border: none;
+  color: #9147ff;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0 0.3rem;
+  line-height: 1;
+  transition: opacity 0.2s ease;
+}
+
+.message:hover .message-mod-button {
+  opacity: 1;
+}
+
+.message-mod-button:hover {
+  color: #a970ff;
+}
+
+.mod-menu {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  background-color: #1f1f23;
+  border: 1px solid #2f2f35;
+  border-radius: 4px;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 120px;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.mod-menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mod-menu::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 3px;
+}
+
+.mod-menu::-webkit-scrollbar-thumb {
+  background: #2f2f35;
+  border-radius: 3px;
+}
+
+.mod-menu::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+.mod-menu button {
+  background: none;
+  border: none;
+  color: #dedee3;
+  padding: 0.4rem 0.8rem;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 2px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.mod-menu button:hover {
+  background-color: #2f2f35;
+}
+
+.mod-menu .ban-button {
+  color: #ff4d4d;
+  border-top: 1px solid #2f2f35;
+  margin-top: 0.3rem;
+  padding-top: 0.6rem;
+}
