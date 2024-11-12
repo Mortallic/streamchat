@@ -16,7 +16,23 @@ class MessagesService {
     subscribe(callback) {
         return this.client.subscribe(
             [`databases.${APPWRITE_CONFIG.databaseId}.collections.${APPWRITE_CONFIG.messagesCollectionId}.documents`],
-            callback
+            (response) => {
+                if (response.events.includes('databases.*.collections.*.documents.*.create')) {
+                    const newMessage = response.payload;
+                    callback({
+                        type: 'create',
+                        message: newMessage
+                    });
+                }
+                
+                if (response.events.includes('databases.*.collections.*.documents.*.update')) {
+                    const updatedMessage = response.payload;
+                    callback({
+                        type: 'update',
+                        message: updatedMessage
+                    });
+                }
+            }
         );
     }
 
@@ -44,11 +60,11 @@ class MessagesService {
                 APPWRITE_CONFIG.databaseId,
                 APPWRITE_CONFIG.messagesCollectionId,
                 [
-                    Query.orderAsc('timestamp'),
-                    Query.limit(50)
+                    Query.orderDesc('timestamp'),
+                    Query.limit(100)
                 ]
             );
-            return response.documents;
+            return response.documents.reverse();
         } catch (error) {
             throw error;
         }

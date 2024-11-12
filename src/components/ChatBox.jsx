@@ -7,6 +7,7 @@ import './ChatBox.css';
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const chatBoxRef = useRef(null);
+  const MESSAGE_LIMIT = 100;
 
   const fetchMessages = async () => {
     try {
@@ -20,22 +21,19 @@ function ChatBox() {
   useEffect(() => {
     fetchMessages();
 
-    // Subscribe to real-time updates
-    const unsubscribe = messagesService.subscribe((response) => {
-      console.log('Realtime response:', response);
-      
-      if (response.events.includes('databases.*.collections.*.documents.*.create')) {
-        // Handle new message
-        const newMessage = response.payload;
-        setMessages(prevMessages => [...prevMessages, newMessage]);
+    const unsubscribe = messagesService.subscribe((event) => {
+      if (event.type === 'create') {
+        setMessages(prevMessages => {
+          const newMessages = [...prevMessages, event.message];
+          // Keep only the last 100 messages
+          return newMessages.slice(-MESSAGE_LIMIT);
+        });
       }
       
-      if (response.events.includes('databases.*.collections.*.documents.*.update')) {
-        // Handle message update
-        const updatedMessage = response.payload;
+      if (event.type === 'update') {
         setMessages(prevMessages => 
           prevMessages.map(message => 
-            message.$id === updatedMessage.$id ? updatedMessage : message
+            message.$id === event.message.$id ? event.message : message
           )
         );
       }
