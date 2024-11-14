@@ -33,6 +33,27 @@ function MessageInput() {
     }
   };
 
+  const handleAdminCommand = async (command, args) => {
+    if (!user?.profile?.isAdmin) return false;
+    try {
+      switch (command) {
+        case 'mod':
+          if (args[0]) {
+            await authService.modUser(args[0]);
+            return true;
+          }
+          break;
+        case 'vip':
+          if (args[0]) {
+            await authService.vipUser(args[0]);
+            return true;
+          }
+      }
+    } catch (error) {
+      console.error('Error executing command:', error);
+    }
+    return false;
+  }
   const handleCommand = async (command, args) => {
     if (!user?.profile?.isMod) return false;
 
@@ -67,13 +88,14 @@ function MessageInput() {
 
         case 'help':
           const helpMessage = `
-Available commands:
+Available mod commands:
 /delete [messageId] - Delete a message
 /del [messageId] - Short for delete
 /timeout [userId] [minutes] - Timeout a user
 /to [userId] [minutes] - Short for timeout
 /ban [userId] - Ban a user
 /help - Show this message
+${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moderator' : ''}
           `.trim();
           console.log(helpMessage);
           return true;
@@ -95,10 +117,23 @@ Available commands:
       // Check if message is a command
       if (message.startsWith('/')) {
         const [command, ...args] = message.slice(1).split(' ');
-        const handled = await handleCommand(command.toLowerCase(), args);
-        if (handled) {
-          setMessage('');
-          return;
+        
+        // Check admin commands first
+        if (user?.profile?.isAdmin) {
+          const handled = await handleAdminCommand(command.toLowerCase(), args);
+          if (handled) {
+            setMessage('');
+            return;
+          }
+        }
+        
+        // Then check mod commands
+        if (user?.profile?.isMod) {
+          const handled = await handleCommand(command.toLowerCase(), args);
+          if (handled) {
+            setMessage('');
+            return;
+          }
         }
       }
 

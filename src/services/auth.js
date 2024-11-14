@@ -33,6 +33,8 @@ class AuthService {
                     email: email,
                     createdAt: new Date().toISOString(),
                     isMod: false,
+                    isAdmin: false,
+                    badge: null,
                     color: '#000000',
                 }
             );
@@ -201,6 +203,42 @@ class AuthService {
                 }
             }
             return true;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async modUser(userId) {
+        try {
+            const profile = await this.getUserProfile(userId);
+            if (profile) {
+                await databases.updateDocument(
+                    APPWRITE_CONFIG.databaseId,
+                    APPWRITE_CONFIG.profilesCollectionId,
+                    profile.$id,
+                    {
+                        isMod: true,
+                        badge: 'mod'
+                    }
+                );
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async vipUser(userId) {
+        try {
+            const profile = await this.getUserProfile(userId);
+            if (profile) {
+                await databases.updateDocument(
+                    APPWRITE_CONFIG.databaseId,
+                    APPWRITE_CONFIG.profilesCollectionId,
+                    profile.$id,
+                    {
+                        badge: 'vip'
+                    }
+                );
+            }
         } catch (error) {
             throw error;
         }

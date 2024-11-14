@@ -6,6 +6,7 @@ import './Message.css';
 
 function Message({ messageId, timestamp, username, content, userId, isCensored }) {
   const [userColor, setUserColor] = useState('#4d9eff');
+  const [userBadge, setUserBadge] = useState(null);
   const [showModMenu, setShowModMenu] = useState(false);
   const { user } = useAuth();
 
@@ -15,6 +16,9 @@ function Message({ messageId, timestamp, username, content, userId, isCensored }
         const profile = await authService.getUserProfile(userId);
         if (profile?.color) {
           setUserColor(profile.color);
+        }
+        if (profile?.badge) {
+          setUserBadge(profile.badge);
         }
       } catch (error) {
         console.error('Error fetching user profile:', error);
@@ -60,15 +64,37 @@ function Message({ messageId, timestamp, username, content, userId, isCensored }
     e.stopPropagation();
   };
 
+  const getBadgeEmoji = (badge) => {
+    switch (badge) {
+      case 'admin':
+        return '👑'; // Crown for admin
+      case 'mod':
+        return '⚔️'; // Crossed swords for mod
+      case 'vip':
+        return '⭐'; // Star for VIP
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className={`message ${isCensored ? 'message-censored' : ''}`}>
       <div className="message-content-wrapper">
-        <span className="message-time">{formatTime(timestamp)}</span>
-        <span 
-          className="message-user" 
-          style={{ color: userColor }}
-        >
-          {username}
+        <span className="user-badge-wrapper">
+          {userBadge && (
+            <span 
+              className={`user-badge ${userBadge}`} 
+              title={userBadge.toUpperCase()}
+            >
+              {getBadgeEmoji(userBadge)}
+            </span>
+          )}
+          <span 
+            className="message-user" 
+            style={{ color: userColor }}
+          >
+            {username}
+          </span>
         </span>
         <span className="message-content">
           {isCensored ? <em>Message deleted</em> : content}
