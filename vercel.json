@@ -4,12 +4,8 @@
       "source": "/(.*)",
       "headers": [
         {
-          "key": "X-Frame-Options",
-          "value": "ALLOW-FROM *"
-        },
-        {
           "key": "Content-Security-Policy",
-          "value": "frame-ancestors 'self' https://*.vercel.app https://streamchat-qn2vu9qvz-mortallics-projects.vercel.app https://streamchat-chi.vercel.app/"
+          "value": "frame-ancestors *"
         }
       ]
     }
