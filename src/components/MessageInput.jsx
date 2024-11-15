@@ -48,6 +48,11 @@ function MessageInput() {
             await authService.vipUser(args[0]);
             return true;
           }
+        case 'unmod':
+          if (args[0]) {
+            await authService.unmodUser(args[0]);
+            return true;
+          }
       }
     } catch (error) {
       console.error('Error executing command:', error);
@@ -85,7 +90,12 @@ function MessageInput() {
             return true;
           }
           break;
-
+        case 'unban':
+          if (args[0]) {
+            await authService.unbanUser(args[0]);
+            return true;
+          }
+          break;
         case 'help':
           const helpMessage = `
 Available mod commands:
@@ -94,6 +104,7 @@ Available mod commands:
 /timeout [userId] [minutes] - Timeout a user
 /to [userId] [minutes] - Short for timeout
 /ban [userId] - Ban a user
+/unban [userId] - Unban a user
 /help - Show this message
 ${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moderator' : ''}
           `.trim();
@@ -141,7 +152,7 @@ ${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moder
       await messagesService.sendMessage(
         message,
         user.$id,
-        user.profile?.name || user.$id,
+        user.profile?.name,
         user.profile?.color || '#4d9eff'
       );
       setMessage('');

@@ -243,6 +243,61 @@ class AuthService {
             throw error;
         }
     }
+    async unmodUser(userId){
+        try {
+            const profile = await this.getUserProfile(userId);
+            if (profile) {
+                await databases.updateDocument(
+                    APPWRITE_CONFIG.databaseId,
+                    APPWRITE_CONFIG.profilesCollectionId,
+                    profile.$id,
+                    {
+                        isMod: false,
+                        badge: null
+                    }
+                );
+            }
+        } catch (error) {
+            throw error;
+        }
+    }
+    async unbanUser(userId){
+        try {
+            const profile = await this.getUserProfile(userId);
+            if (profile) {
+                await databases.updateDocument(
+                    APPWRITE_CONFIG.databaseId,
+                    APPWRITE_CONFIG.profilesCollectionId,
+                    profile.$id,
+                    {
+                        isBanned: false
+                    }
+                );
+            }   
+        } catch (error) {
+            throw error;
+        }   
+    }
+
+    async getUserProfileByName(username) {
+        try {
+            const response = await databases.listDocuments(
+                APPWRITE_CONFIG.databaseId,
+                APPWRITE_CONFIG.profilesCollectionId,
+                [
+                    Query.equal('name', username),
+                    Query.limit(1)
+                ]
+            );
+
+            if (response.documents.length > 0) {
+                return response.documents[0];
+            }
+            return null;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const authService = new AuthService();

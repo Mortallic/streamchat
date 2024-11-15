@@ -121,6 +121,22 @@ class MessagesService {
             throw error;
         }
     }
+
+    async getUserMessages(userId) {
+        try {
+            const response = await this.databases.listDocuments(
+                APPWRITE_CONFIG.databaseId,
+                APPWRITE_CONFIG.messagesCollectionId,
+                [
+                    Query.equal('userId', userId),
+                    Query.orderDesc('timestamp'),
+                ]
+            );
+            return response.documents.reverse();
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 const messagesService = new MessagesService();

@@ -66,10 +66,9 @@
 }
 
 .auth-error {
-    background-color: rgba(255, 0, 0, 0.1);
-    border: 1px solid rgba(255, 0, 0, 0.2);
-    color: #ff4444;
-    padding: 0.75rem;
+    color: #ff4d4d;
+    background-color: rgba(255, 77, 77, 0.1);
+    padding: 0.8rem;
     border-radius: 4px;
     margin-bottom: 1rem;
     font-size: 0.9rem;
@@ -90,4 +89,22 @@
 
 .auth-switch a:hover {
     text-decoration: underline;
+}
+
+/* Password strength indicator styles (optional) */
+.password-strength {
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+.password-strength.weak {
+    color: #ff4d4d;
+}
+
+.password-strength.medium {
+    color: #ffd700;
+}
+
+.password-strength.strong {
+    color: #4dff4d;
 } 

@@ -6,12 +6,32 @@ import './Auth.css';
 function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [name, setName] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const validatePassword = () => {
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            return false;
+        }
+        if (password.length < 8) {
+            setError('Password must be at least 8 characters long');
+            return false;
+        }
+        return true;
+    };
+
     const handleRegister = async (e) => {
         e.preventDefault();
+        setError('');
+
+        // Validate passwords match
+        if (!validatePassword()) {
+            return;
+        }
+
         try {
             await authService.createAccount(email, password, name);
             await authService.login(email, password);
@@ -35,6 +55,8 @@ function Register() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         required
+                        minLength={3}
+                        maxLength={30}
                     />
                 </div>
 
@@ -57,6 +79,19 @@ function Register() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
+                        minLength={8}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+                    <input
+                        type="password"
+                        id="confirmPassword"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                        minLength={8}
                     />
                 </div>
 

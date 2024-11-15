@@ -25,6 +25,7 @@
   margin-right: 0.4rem;
   color: #4d9eff;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .message-user:hover {

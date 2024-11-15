@@ -3,12 +3,14 @@ import { useAuth } from '../contexts/AuthContext';
 import authService from '../services/auth';
 import messagesService from '../services/messages';
 import './Message.css';
+import { useNavigate } from 'react-router-dom';
 
 function Message({ messageId, timestamp, username, content, userId, isCensored }) {
   const [userColor, setUserColor] = useState('#4d9eff');
   const [userBadge, setUserBadge] = useState(null);
   const [showModMenu, setShowModMenu] = useState(false);
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -92,6 +94,7 @@ function Message({ messageId, timestamp, username, content, userId, isCensored }
           <span 
             className="message-user" 
             style={{ color: userColor }}
+            onClick={() => navigate(`/logs/${username}`)}
           >
             {username}
           </span>

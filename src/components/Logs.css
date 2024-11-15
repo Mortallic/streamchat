@@ -1,0 +1,23 @@
+.logs-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background-color: #18181b;
+}
+
+.logs-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #adadb8;
+}
+
+.logs-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #adadb8;
+  font-style: italic;
+} 
