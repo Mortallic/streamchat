@@ -38,6 +38,11 @@
   margin-right: 0.4rem;
 }
 
+.message-time.full-date {
+  font-size: 0.8rem;
+  color: #9147ff;
+}
+
 .message-content {
   color: #dedee3;
 }

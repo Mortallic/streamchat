@@ -4,8 +4,9 @@ import authService from '../services/auth';
 import messagesService from '../services/messages';
 import './Message.css';
 import { useNavigate } from 'react-router-dom';
+import { formatTime, formatFullDate } from '../utils/dateUtils';
 
-function Message({ messageId, timestamp, username, content, userId, isCensored }) {
+function Message({ messageId, timestamp, username, content, userId, isCensored, showFullDate = false }) {
   const [userColor, setUserColor] = useState('#4d9eff');
   const [userBadge, setUserBadge] = useState(null);
   const [showModMenu, setShowModMenu] = useState(false);
@@ -57,11 +58,6 @@ function Message({ messageId, timestamp, username, content, userId, isCensored }
     }
   };
 
-  const formatTime = (isoString) => {
-    const date = new Date(isoString);
-    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  };
-
   const handleModMenuClick = (e) => {
     e.stopPropagation();
   };
@@ -82,6 +78,9 @@ function Message({ messageId, timestamp, username, content, userId, isCensored }
   return (
     <div className={`message ${isCensored ? 'message-censored' : ''}`}>
       <div className="message-content-wrapper">
+        <span className="message-time">
+          {showFullDate ? formatFullDate(timestamp) : ''}
+        </span>
         <span className="user-badge-wrapper">
           {userBadge && (
             <span 

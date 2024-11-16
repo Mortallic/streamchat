@@ -146,9 +146,14 @@ ${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moder
             return;
           }
         }
+
+        // If message starts with / but isn't a valid command, don't send it
+        console.log('Invalid command:', command);
+        setMessage('');
+        return;
       }
 
-      // If not a command or command failed, send as regular message
+      // Only non-slash messages get here
       await messagesService.sendMessage(
         message,
         user.$id,

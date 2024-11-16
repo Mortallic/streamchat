@@ -36,7 +36,7 @@ class MessagesService {
         );
     }
 
-    async sendMessage(content, userId, username, userColor) {
+    async sendMessage(content, userId, username) {
         try {
             return await this.databases.createDocument(
                 APPWRITE_CONFIG.databaseId,

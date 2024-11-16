@@ -57,6 +57,7 @@ function Logs({ userId }) {
             content={message.content}
             userId={message.userId}
             isCensored={false}
+            showFullDate={true}
           />
         ))
       )}
