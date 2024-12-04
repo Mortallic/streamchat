@@ -65,7 +65,6 @@ function ChatBox() {
           />
         ))}
       </div>
-      <MessageInput />
     </div>
   );
 }
