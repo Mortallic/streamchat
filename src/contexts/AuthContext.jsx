@@ -1,36 +1,27 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import authService from '../services/auth';
 
-const AuthContext = createContext();
+// Create the context
+const AuthContext = createContext(null);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
-  return context;
-};
-
+// Export the provider component
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initAuth = async () => {
+    const loadUser = async () => {
       try {
         const currentUser = await authService.getCurrentUser();
-        if (currentUser) {
-          const profile = await authService.getUserProfile(currentUser.$id);
-          setUser({ ...currentUser, profile });
-        }
+        setUser(currentUser);
       } catch (error) {
-        console.error('Auth initialization error:', error);
+        console.error('Error loading user:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    initAuth();
+    loadUser();
   }, []);
 
   const value = {
@@ -48,6 +39,15 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
+}
+
+// Export the hook
+export function useAuth() {
+  const context = useContext(AuthContext);
+  if (context === null) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 }
 
 export default AuthProvider;

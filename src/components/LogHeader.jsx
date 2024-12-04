@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import './LogHeader.css';
 
-function LogHeader({ username }) {
+function LogHeader({ username, banCount }) {
   const navigate = useNavigate();
 
   return (
@@ -9,7 +9,12 @@ function LogHeader({ username }) {
       <button className="back-button" onClick={() => navigate('/')}>
         ← Back
       </button>
-      <h1>Message History for {username}</h1>
+      <div className="user-info">
+        <h1>Message History for {username}</h1>
+        <div className="ban-info">
+          Times Banned: <span className="ban-count">{banCount}</span>
+        </div>
+      </div>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import messagesService from '../services/messages';
 import './Message.css';
 import { useNavigate } from 'react-router-dom';
 import { formatTime, formatFullDate } from '../utils/dateUtils';
+import { parseMessage } from '../config/emotes';
 
 function Message({ messageId, timestamp, username, content, userId, isCensored, showFullDate = false }) {
   const [userColor, setUserColor] = useState('#4d9eff');
@@ -75,6 +76,30 @@ function Message({ messageId, timestamp, username, content, userId, isCensored, 
     }
   };
 
+  const renderContent = () => {
+    if (isCensored) {
+      return <em>Message deleted</em>;
+    }
+
+    const parsedContent = parseMessage(content);
+    return parsedContent.map((part) => {
+      if (part.type === 'emote') {
+        return (
+          <div className="emote-container" key={part.key}>
+            <img
+              src={part.content}
+              alt={part.code}
+              className="chat-emote"
+              title={part.code}
+            />
+            <div className="emote-tooltip">{part.code}</div>
+          </div>
+        );
+      }
+      return <span key={part.key}>{part.content}</span>;
+    });
+  };
+
   return (
     <div className={`message ${isCensored ? 'message-censored' : ''}`}>
       <div className="message-content-wrapper">
@@ -99,7 +124,7 @@ function Message({ messageId, timestamp, username, content, userId, isCensored, 
           </span>
         </span>
         <span className="message-content">
-          {isCensored ? <em>Message deleted</em> : content}
+          {renderContent()}
         </span>
       </div>
       {user?.profile?.isMod && (

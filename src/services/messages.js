@@ -129,12 +129,13 @@ class MessagesService {
                 APPWRITE_CONFIG.messagesCollectionId,
                 [
                     Query.equal('userId', userId),
-                    Query.orderDesc('timestamp'),
+                    Query.orderDesc('$createdAt'),
                 ]
             );
-            return response.documents.reverse();
+            return response.documents;
         } catch (error) {
-            throw error;
+            console.error('Error fetching user messages:', error);
+            return [];
         }
     }
 }

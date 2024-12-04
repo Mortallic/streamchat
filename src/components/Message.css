@@ -1,6 +1,6 @@
 .message {
   margin-bottom: 0.2rem;
-  padding: 0.3rem 0.5rem;
+  padding: 0.2rem 0.2rem;
   background-color: transparent;
   border-radius: 0;
   border: none;
@@ -45,6 +45,10 @@
 
 .message-content {
   color: #dedee3;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
 }
 
 .message-censored .message-content {
@@ -181,4 +185,71 @@
 
 .user-badge.vip {
   color: #ff4dff; /* Pink for VIP */
+}
+
+.chat-emote {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.7rem;
+  width: auto;
+  margin: 0 2px;
+  object-fit: contain;
+}
+
+/* Optional: hover effect */
+.chat-emote:hover {
+  transform: scale(1.15);
+  transition: transform 0.2s ease;
+}
+
+.emote-container {
+  position: relative;
+  display: inline-block;
+}
+
+.chat-emote {
+  display: inline-block;
+  vertical-align: middle;
+  height: 28px;
+  width: auto;
+  margin: 0 2px;
+  object-fit: contain;
+}
+
+.emote-tooltip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #18181b;
+  color: white;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.2s, visibility 0.2s;
+  border: 1px solid #2f2f35;
+  margin-bottom: 4px;
+}
+
+/* Show tooltip on hover */
+.emote-container:hover .emote-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Optional: Add a small arrow */
+.emote-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #2f2f35 transparent transparent transparent;
 }

@@ -1,0 +1,17 @@
+.mod-comment {
+  background-color: #1f1f23;
+  border-radius: 4px;
+  padding: 0.75rem;
+  margin: 0.5rem 0;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mod-comment-label {
+  color: #9147ff;
+  font-weight: bold;
+}
+
+.mod-comment-content {
+  color: #efeff1;
+} 

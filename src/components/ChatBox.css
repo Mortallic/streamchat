@@ -1,6 +1,6 @@
 .chat-box {
   flex: 1;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   padding-bottom: 80px; /* Add padding to prevent messages from being hidden behind input */
   overflow-y: auto;
   background-color: #18181b;

@@ -7,6 +7,22 @@
   gap: 1rem;
 }
 
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ban-info {
+  font-size: 0.9rem;
+  color: #adadb8;
+}
+
+.ban-count {
+  color: #ff4d4d;
+  font-weight: bold;
+}
+
 .back-button {
   padding: 0.5rem 1rem;
   background-color: #2f2f35;

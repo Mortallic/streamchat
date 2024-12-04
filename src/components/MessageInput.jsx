@@ -111,6 +111,20 @@ ${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moder
           console.log(helpMessage);
           return true;
 
+        case 'note':
+        case 'comment':
+          if (args.length >= 2) {
+            const username = args[0];
+            const comment = args.slice(1).join(' ');
+            // Get user profile by username first
+            const userProfile = await authService.getUserProfileByName(username);
+            if (userProfile) {
+              await authService.setModComment(userProfile.$id, comment);
+              return true;
+            }
+          }
+          break;
+
         default:
           return false;
       }
@@ -146,14 +160,9 @@ ${user?.profile?.isAdmin ? '\nAdmin commands:\n/mod [userId] - Make user a moder
             return;
           }
         }
-
-        // If message starts with / but isn't a valid command, don't send it
-        console.log('Invalid command:', command);
-        setMessage('');
-        return;
       }
 
-      // Only non-slash messages get here
+      // If not a command or command failed, send as regular message
       await messagesService.sendMessage(
         message,
         user.$id,

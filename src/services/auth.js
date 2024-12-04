@@ -35,7 +35,8 @@ class AuthService {
                     isMod: false,
                     isAdmin: false,
                     badge: null,
-                    color: '#000000',
+                    color: '#ffffff',
+                    bans: 0,
                 }
             );
 
@@ -178,7 +179,8 @@ class AuthService {
                     APPWRITE_CONFIG.profilesCollectionId,
                     profile.$id,
                     {
-                        isBanned: true
+                        isBanned: true,
+                        bans: profile.bans + 1
                     }
                 );
             }
@@ -294,6 +296,34 @@ class AuthService {
                 return response.documents[0];
             }
             return null;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async setModComment(userId, comment) {
+        try {
+            return await databases.updateDocument(
+                APPWRITE_CONFIG.databaseId,
+                APPWRITE_CONFIG.profilesCollectionId,
+                userId,
+                {
+                    modComment: comment
+                }
+            );
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    async getUserModComment(userId) {
+        try {
+            const profile = await databases.getDocument(
+                APPWRITE_CONFIG.databaseId,
+                APPWRITE_CONFIG.profilesCollectionId,
+                userId
+            );
+            return profile.modComment || '';
         } catch (error) {
             throw error;
         }
